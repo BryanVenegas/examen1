@@ -7,43 +7,6 @@ dispositivos = {
     
 }  
 
-@app.route("/", methods=["GET"])
-def raiz():
-    return redirect(url_for("dispositivos_html"))
-
-@app.route("/dispositivos_html", methods=["GET"])
-def dispositivos_html():
-    html = """
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Dispositivos</title>
-</head>
-<body>
-    <h1>Listado de Dispositivos</h1>
-    {% if dispositivos %}
-        {% for d in dispositivos.values() %}
-        <table border="1" cellpadding="5" cellspacing="0">
-            <tr><td>id</td><td>{{ d["id"] }}</td></tr>
-            <tr><td>nombre</td><td>{{ d["nombre"] }}</td></tr>
-            <tr><td>descripcion</td><td>{{ d["descripcion"] }}</td></tr>
-            <tr><td>ip</td><td>{{ d["ip"] }}</td></tr>
-            <tr><td>mac</td><td>{{ d["mac"] }}</td></tr>
-            <tr><td>ubicacion</td><td>{{ d["ubicacion"] }}</td></tr>
-            <tr><td>tipo</td><td>{{ d["tipo"] }}</td></tr>
-            <tr><td>otros</td><td>{{ d["otros"] }}</td></tr>
-        </table>
-        <br>
-        {% endfor %}
-    {% else %}
-        <p>No hay dispositivos registrados.</p>
-    {% endif %}
-</body>
-</html>
-"""
-    return render_template_string(html, dispositivos=dispositivos)
-
 @app.route("/dispositivos", methods=["POST"])
 def crear_dispositivo():
     data = request.json or {}
